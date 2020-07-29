@@ -5,7 +5,6 @@ import by.peretz.spring.repository.AnimalRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +15,6 @@ public class AnimalService {
   public final AnimalRepo animalRepo;
 
   public void addAnimal(Animal animal) {
-    if (animal.getCreatedDate() == null) {
-      animal.setCreatedDate(LocalDateTime.now());
-    }
-    animal.setUpdatedDate(LocalDateTime.now());
     animalRepo.save(animal);
   }
 
@@ -29,5 +24,32 @@ public class AnimalService {
     animals.forEach(animalList::add);
     return animalList;
   }
+
+  public Animal animalFromDb(Long id) {
+
+    return animalRepo.findById(id).orElse(null);
+  }
+
+  public void removeAnimal(Long id) {
+
+    Animal animal = animalFromDb(id);
+
+    if(animal != null) {
+      animal.setDeleted(true);
+      animalRepo.save(animal);
+    }
+  }
+
+  public void repairAnimal(Long id) {
+
+    Animal animal = animalFromDb(id);
+
+    if(animal != null) {
+      animal.setDeleted(false);
+      animalRepo.save(animal);
+    }
+  }
+
+
 
 }

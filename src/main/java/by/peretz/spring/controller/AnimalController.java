@@ -1,30 +1,53 @@
 package by.peretz.spring.controller;
 
 import by.peretz.spring.domain.Animal;
+import by.peretz.spring.repository.AnimalRepo;
 import by.peretz.spring.servises.AnimalService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/animals")
+@RequiredArgsConstructor
 public class AnimalController {
+
+  public final AnimalRepo animalRepo;
 
   public final AnimalService animalService;
 
-  public AnimalController(AnimalService animalService) {
-    this.animalService = animalService;
-  }
-
   @GetMapping
-  public String getAnimals(Model model) {
+  public String getAnimals(
+      @RequestParam(required = false, name = "editAnimal") Long id,
+      @RequestParam(name = "removeId", required = false, defaultValue = "") Long removeId,
+      @RequestParam(name = "repairId", required = false) Long repairId,
+      Model model
+  ) {
     model.addAttribute("animals", animalService.findAllAnimal());
+    if (id != null) {
+      if(animalService.animalFromDb(id) == null) {
+        model.addAttribute("animalError", "Animal not found");
+      } else {
+        model.addAttribute("animal", animalService.animalFromDb(id));
+      }
+    }
+
+    if (removeId != null) {
+      animalService.removeAnimal(removeId);
+      return "redirect:/animals";
+    }
+
+    if (repairId != null) {
+      animalService.repairAnimal(repairId);
+      return "redirect:/animals";
+    }
+
     return "animals";
   }
 

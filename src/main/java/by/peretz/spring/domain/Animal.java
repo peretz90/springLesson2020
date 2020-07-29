@@ -8,18 +8,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Animal {
+public class Animal extends AbstractEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Setter(AccessLevel.NONE)
   private Long id;
 
   @NotEmpty
@@ -32,10 +32,7 @@ public class Animal {
   @NonNull
   private String name;
 
+  @NotNull
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate birth;
-  private LocalDateTime createdDate;
-  private LocalDateTime updatedDate;
-
-  private boolean isDeleted = false;
 }
