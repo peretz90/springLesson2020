@@ -5,10 +5,10 @@
        value="<#if animal?? && animal.id??>${animal.id}</#if>"/>
 <input type="text" name="name" placeholder="Name"
        class="form-control ${(nameError??)?string('is-invalid', '')}"
-       value="<#if animal?? && animal.name>${animal.name}</#if>"/>
+       value="<#if animal?? && animal.name??>${animal.name}</#if>"/>
 <input type="text" name="species" placeholder="species"
        class="form-control ${(speciesError??)?string('is-invalid', '')}"
-       value="<#if animal?? && animal.species>${animal.species}</#if>" />
+       value="<#if animal?? && animal.species??>${animal.species}</#if>" />
 <input type="text" name="sex" placeholder="sex"
        class="form-control ${(sexError??)?string('is-invalid', '')}"
        value="<#if animal?? && animal.sex??>${animal.sex}</#if>" />

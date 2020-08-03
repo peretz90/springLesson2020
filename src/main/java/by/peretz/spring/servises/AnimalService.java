@@ -25,14 +25,8 @@ public class AnimalService {
     return animalList;
   }
 
-  public Animal animalFromDb(Long id) {
 
-    return animalRepo.findById(id).orElse(null);
-  }
-
-  public void removeAnimal(Long id) {
-
-    Animal animal = animalFromDb(id);
+  public void removeAnimal(Animal animal) {
 
     if(animal != null) {
       animal.setDeleted(true);
@@ -40,9 +34,8 @@ public class AnimalService {
     }
   }
 
-  public void repairAnimal(Long id) {
+  public void repairAnimal(Animal animal) {
 
-    Animal animal = animalFromDb(id);
 
     if(animal != null) {
       animal.setDeleted(false);
