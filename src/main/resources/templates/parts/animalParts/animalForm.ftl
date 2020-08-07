@@ -1,4 +1,11 @@
-<h1>Add animal</h1>
+<h2>Search</h2>
+<form method="get" action="animals">
+	<input type="text" name="nameFilter" placeholder="Name" value="${nameFilter!}">
+	<input type="text" name="speciesFilter" placeholder="Species" value="${speciesFilter!}">
+	<input type="submit" value="Search">
+</form>
+
+<h2>Add animal</h2>
 <form method="post">
     <#if animalError?? && animalError?has_content><div style="color:red">${animalError}</div></#if>
 <input type="hidden" name="id"

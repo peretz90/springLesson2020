@@ -3,7 +3,10 @@ package by.peretz.spring.servises;
 import by.peretz.spring.domain.Animal;
 import by.peretz.spring.repository.AnimalRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +46,17 @@ public class AnimalService {
     }
   }
 
+  public Page<Animal> findAllAnimals(Pageable pageable) {
+    return animalRepo.findAll(pageable);
+  }
 
+  public Page<Animal> findAllAnimals(String nameFilter, String speciesFilter, Pageable pageable) {
+
+    if (StringUtils.isEmpty(nameFilter) && StringUtils.isEmpty(speciesFilter)) {
+      return animalRepo.findAll(pageable);
+    } else {
+      return animalRepo.findByNameStartingWithIgnoreCaseAndSpeciesStartsWithIgnoreCase(nameFilter, speciesFilter, pageable);
+    }
+  }
 
 }
