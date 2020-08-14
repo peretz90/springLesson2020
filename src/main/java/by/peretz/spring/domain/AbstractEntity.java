@@ -18,7 +18,7 @@ abstract class AbstractEntity {
 
   @CreatedDate
   @Column(updatable = false)
-  @DateTimeFormat(pattern = "d.MMMM.yyyy Time: H.m.s")
+  @DateTimeFormat
   private LocalDateTime createdDate;
   @LastModifiedDate
   private LocalDateTime updatedDate;
