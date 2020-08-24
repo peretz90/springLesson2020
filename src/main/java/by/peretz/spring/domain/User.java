@@ -1,7 +1,9 @@
 package by.peretz.spring.domain;
 
+import by.peretz.spring.validation.UniqueEmail;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +19,7 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 @Data
+@NoArgsConstructor
 public class User extends AbstractEntity implements UserDetails {
 
   @Id
@@ -45,6 +48,7 @@ public class User extends AbstractEntity implements UserDetails {
 
   @Email
   @NotBlank
+  @UniqueEmail(message = "Неверный email")
   private String email;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")
