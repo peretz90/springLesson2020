@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -21,9 +22,16 @@ public class RegistrationController {
   public final UserService userService;
 
   @GetMapping
-  public String registration() {
-    return "registration";
+  public String registration(
+    @RequestParam(name = "editUser", required = false, defaultValue = "") User user,
+    Model model
+    ){
+      model.addAttribute("user", user);
+      model.addAttribute("users", userService.users());
+
+      return "registration";
   }
+
 
   @PostMapping
   public String addUser(
@@ -37,11 +45,8 @@ public class RegistrationController {
       model.addAttribute("user", user);
       return "registration";
     } else {
-      if (userService.addUser(user)) {
-        return "redirect:/animals";
-      } else {
-        return "registration";
-      }
+      userService.addUser(user);
+      return "redirect:/animals";
     }
   }
 

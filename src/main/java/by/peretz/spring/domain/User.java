@@ -20,6 +20,7 @@ import java.util.Set;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
+@UniqueEmail(message = "Неверный email")
 public class User extends AbstractEntity implements UserDetails {
 
   @Id
@@ -48,8 +49,9 @@ public class User extends AbstractEntity implements UserDetails {
 
   @Email
   @NotBlank
-  @UniqueEmail(message = "Неверный email")
   private String email;
+
+  private String activationCode;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate birthday;

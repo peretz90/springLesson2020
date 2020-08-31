@@ -32,4 +32,10 @@
            value="<#if animal?? && user.birthday??>${user.birthday}</#if>">
     <button type="submit">Registration</button>
   </form>
+
+    <#list users as user>
+      <p>
+        <a href="/registration?editUser=${user.id}">${user.id}</a>
+      </p>
+    </#list>
 </@pt.page>
