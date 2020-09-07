@@ -15,11 +15,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
-          .antMatchers("/**").permitAll()
+          .antMatchers("/", "/registration").permitAll()
           .anyRequest().authenticated()
           .and()
         .formLogin()
-//          .loginPage("/login")
+          .loginPage("/login")
           .defaultSuccessUrl("/animals")
           .permitAll()
           .and()
