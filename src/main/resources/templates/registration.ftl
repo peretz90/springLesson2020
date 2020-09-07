@@ -7,6 +7,11 @@
     <input type="text" name="username" placeholder="username"
            class="form-control ${(usernameError??)?string('is-invalid', '')}"
            value="<#if user?? && user.username??>${user.username}</#if>"/>
+    <#if usernameError??>
+      <div class="invalid-feedback">
+        ${usernameError}
+      </div>
+    </#if>
     <input type="text" name="password" placeholder="password"
            class="form-control ${(passwordError??)?string('is-invalid', '')}"
            value="<#if user?? && user.password??>${user.password}</#if>"/>

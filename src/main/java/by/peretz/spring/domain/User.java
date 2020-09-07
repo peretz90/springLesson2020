@@ -1,6 +1,7 @@
 package by.peretz.spring.domain;
 
 import by.peretz.spring.validation.UniqueEmail;
+import by.peretz.spring.validation.UniqueUsername;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,8 @@ import java.util.Set;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
-@UniqueEmail(message = "Неверный email")
+@UniqueEmail(message = "email существует")
+@UniqueUsername(message = "Логин существует")
 public class User extends AbstractEntity implements UserDetails {
 
   @Id

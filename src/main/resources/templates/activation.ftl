@@ -1,6 +1,6 @@
 <#import "parts/pageTemplate.ftl" as pt>
 
 <@pt.page>
-  <h3>${message}</h3>
-    <a href="/">Global</a>
+  <div><h3>${message}</h3></div>
+  <div><a href="/">Global</a></div>
 </@pt.page>
