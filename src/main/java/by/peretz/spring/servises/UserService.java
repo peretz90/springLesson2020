@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
+  public final PasswordEncoder passwordEncoder;
   public final UserRepo userRepo;
   public final MailSenderService mailSenderService;
 
@@ -25,6 +27,8 @@ public class UserService implements UserDetailsService {
       user.setRoles(Collections.singleton(Role.USER));
       user.setActive(false);
       user.setActivationCode(UUID.randomUUID().toString());
+      user.setPassword(passwordEncoder.encode(user.getPassword()));
+
       userRepo.save(user);
       sendMessage(user);
   }
@@ -106,7 +110,7 @@ public class UserService implements UserDetailsService {
     }
 
     if(!StringUtils.isEmpty(password)){
-      user.setPassword(password);
+      user.setPassword(passwordEncoder.encode(password));
     }
 
     userRepo.save(user);
