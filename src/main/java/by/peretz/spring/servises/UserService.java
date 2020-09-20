@@ -95,28 +95,47 @@ public class UserService implements UserDetailsService {
     userRepo.save(user);
   }
 
-  public void updateProfile(User user, String password, String email){
+  public Map<String, String> changePassword(String oldPassword, String newPassword, String confirmPassword, User user) {
+    Map<String, String> errorMap = new HashMap<>();
 
-    String userEmail = user.getEmail();
-
-    boolean isChanged = (email != null && email.equals(userEmail) || userEmail != null && userEmail.equals(email));
-
-    if (isChanged){
-      user.setEmail(email);
-
-      if(!StringUtils.isEmpty(email)){
-        user.setActivationCode(UUID.randomUUID().toString());
-      }
+    if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+      errorMap.put("oldPasswordError", "Password incorrect111");
     }
-
-    if(!StringUtils.isEmpty(password)){
-      user.setPassword(passwordEncoder.encode(password));
+    if(newPassword.isEmpty()) {
+      errorMap.put("newPasswordError", "New password must contain some");
     }
-
-    userRepo.save(user);
-    if(isChanged){
-      sendMessage(user);
+    if(!newPassword.equals(confirmPassword)) {
+      errorMap.put("confirmPasswordError", "Passwords not similar");
     }
+    if(errorMap.isEmpty()) {
+      user.setPassword(passwordEncoder.encode(newPassword));
+      userRepo.save(user);
+    }
+    return errorMap;
   }
+
+//  public void updateProfile(User user, String password, String email){
+//
+//    String userEmail = user.getEmail();
+//
+//    boolean isChanged = (email != null && email.equals(userEmail) || userEmail != null && userEmail.equals(email));
+//
+//    if (isChanged){
+//      user.setEmail(email);
+//
+//      if(!StringUtils.isEmpty(email)){
+//        user.setActivationCode(UUID.randomUUID().toString());
+//      }
+//    }
+//
+//    if(!StringUtils.isEmpty(password)){
+//      user.setPassword(passwordEncoder.encode(password));
+//    }
+//
+//    userRepo.save(user);
+//    if(isChanged){
+//      sendMessage(user);
+//    }
+//  }
 
 }

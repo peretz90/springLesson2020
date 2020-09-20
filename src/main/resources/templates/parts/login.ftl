@@ -6,3 +6,9 @@
   <button type="submit" class="btn btn-info">Login</button>
 </form>
 </#macro>
+
+<#macro logout>
+  <form action="/logout" method="post">
+    <button class="btn btn-primary" type="submit">Logged out</button>
+  </form>
+</#macro>

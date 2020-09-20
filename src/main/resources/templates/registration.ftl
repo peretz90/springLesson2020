@@ -12,9 +12,20 @@
         ${usernameError}
       </div>
     </#if>
-    <input type="text" name="password" placeholder="password"
-           class="form-control ${(passwordError??)?string('is-invalid', '')}"
-           value="<#if user?? && user.password??>${user.password}</#if>"/>
+    <input type="password" name="password" placeholder="password"
+           class="form-control ${(passwordError??)?string('is-invalid', '')}"/>
+      <#if passwordError??>
+        <div class="invalid-feedback">
+            ${passwordError}
+        </div>
+      </#if>
+    <input type="password" name="passwordConfirm" placeholder="password"
+           class="form-control ${(passwordConfirmError??)?string('is-invalid', '')}"/>
+      <#if passwordConfirmError??>
+        <div class="invalid-feedback">
+            ${passwordConfirmError}
+        </div>
+      </#if>
     <input type="email" name="email" placeholder="email"
            class="form-control ${(emailError??)?string('is-invalid', '')}"
            value="<#if user?? && user.email??>${user.email}</#if>"/>

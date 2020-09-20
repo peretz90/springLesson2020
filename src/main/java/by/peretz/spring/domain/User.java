@@ -1,5 +1,6 @@
 package by.peretz.spring.domain;
 
+import by.peretz.spring.validation.PasswordConfirm;
 import by.peretz.spring.validation.UniqueEmail;
 import by.peretz.spring.validation.UniqueUsername;
 import lombok.Data;
@@ -23,6 +24,7 @@ import java.util.Set;
 @NoArgsConstructor
 @UniqueEmail(message = "email существует")
 @UniqueUsername(message = "Логин существует")
+@PasswordConfirm(message = "Пароль не совпадает")
 public class User extends AbstractEntity implements UserDetails {
 
   @Id
@@ -34,6 +36,9 @@ public class User extends AbstractEntity implements UserDetails {
 
   @NotBlank
   private String password;
+
+  @Transient
+  private String passwordConfirm;
 
   @NotBlank
   private String firstName;
