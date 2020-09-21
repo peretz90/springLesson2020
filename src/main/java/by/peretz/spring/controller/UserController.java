@@ -49,4 +49,27 @@ public class UserController {
     model.mergeAttributes(errorMap);
     return "password";
   }
+
+  @GetMapping("/email")
+  public String userEmail() {
+    return "email";
+  }
+
+  @PostMapping("/email")
+  public String changeEmail(
+      @RequestParam(name = "oldEmail", defaultValue = "") String oldEmail,
+      @RequestParam(name = "newEmail", defaultValue = "") String newEmail,
+      @AuthenticationPrincipal User user,
+      Model model
+      ) {
+    Map<String, String> emailErrors = userService.changeEmail(oldEmail, newEmail, user);
+    if(emailErrors.isEmpty()) {
+      return "redirect:/logout";
+    } else {
+      model.mergeAttributes(emailErrors);
+      model.addAttribute("oldEmail", oldEmail);
+      model.addAttribute("newEmail", newEmail);
+    }
+    return "email";
+  }
 }

@@ -11,7 +11,7 @@
     >
 <#else>
     <#assign
-    name = "unknown"
+    name = '<a href="/login">Login</a>'
     isAdmin = false
     currentUserId = -1
     >

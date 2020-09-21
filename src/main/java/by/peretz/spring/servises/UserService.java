@@ -114,6 +114,35 @@ public class UserService implements UserDetailsService {
     return errorMap;
   }
 
+  public Map<String, String> changeEmail(String oldEmail, String newEmail, User user) {
+    Map<String, String> emailError = new HashMap<>();
+
+    if(oldEmail.isEmpty()){
+      emailError.put("oldEmailEmpty", "Email must not be empty");
+    }
+    if (!oldEmail.equals(user.getEmail())){
+      emailError.put("oldEmailError", "Email not similar");
+    }
+
+    if (!newEmail.matches("^([a-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$")){
+      emailError.put("newEmailError", "EMail is not correct");
+    }
+
+    if(userRepo.findByEmail(newEmail) != null) {
+      emailError.put("newEmailUnique", "Email isn't unique");
+    }
+
+    if(emailError.isEmpty()){
+      user.setEmail(newEmail);
+      user.setActivationCode(UUID.randomUUID().toString());
+      user.setActive(false);
+      userRepo.save(user);
+      sendMessage(user);
+    }
+
+    return emailError;
+  }
+
 //  public void updateProfile(User user, String password, String email){
 //
 //    String userEmail = user.getEmail();
