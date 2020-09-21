@@ -52,7 +52,7 @@ public class UserService implements UserDetailsService {
 
       String message = String.format(
           "Hello, %s! \n" +
-              "Welcome to animali clinic. Please visit next link http://localhost:8080/activate/%s",
+              "Welcome to animal clinic. Please visit next link http://localhost:8080/activate/%s",
           user.getUsername(),
           user.getActivationCode()
       );

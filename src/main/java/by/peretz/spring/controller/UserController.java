@@ -8,17 +8,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class UserController {
 
   public final UserService userService;
 
-  @GetMapping("/user")
+  @GetMapping
   public String editUser(
       @AuthenticationPrincipal User user,
       Model model
@@ -27,12 +29,12 @@ public class UserController {
     return "user";
   }
 
-  @GetMapping("/user/password")
+  @GetMapping("/password")
   public String password() {
     return "password";
   }
 
-  @PostMapping("/user/password")
+  @PostMapping("/password")
   public String editUser(
       @RequestParam(name = "oldPassword", defaultValue = "", required = false) String oldPassword,
       @RequestParam(name = "newPassword", defaultValue = "", required = false) String newPassword,
