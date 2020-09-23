@@ -3,10 +3,7 @@ package by.peretz.spring.domain;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -35,4 +32,7 @@ public class Animal extends AbstractEntity {
   @NotNull
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate birth;
+
+  @ManyToOne
+  private User animalOwner;
 }

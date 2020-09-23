@@ -3,7 +3,7 @@
 <@pt.page>
   <h1>User editor</h1>
 
-  <form action="/user" method="post">
+  <form action="/users" method="post">
     <input type="text" name="username" value="${user.username}">
       <#list roles as role>
         <div>
@@ -13,6 +13,7 @@
         </div>
       </#list>
     <input type="hidden" value="${user.id}" name="userId">
+
     <button type="submit">Save</button>
   </form>
 </@pt.page>

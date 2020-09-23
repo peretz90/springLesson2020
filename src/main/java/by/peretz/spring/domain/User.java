@@ -58,6 +58,9 @@ public class User extends AbstractEntity implements UserDetails {
   @NotBlank
   private String email;
 
+  @OneToMany(mappedBy = "animalOwner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private Set<Animal> userAnimals;
+
   private String activationCode;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd")

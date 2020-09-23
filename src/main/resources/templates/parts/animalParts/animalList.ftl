@@ -13,6 +13,7 @@
 		<th>isDelete</th>
 		<th></th>
 		<th></th>
+		<th></th>
 	</tr>
 	<tbody>
   <#list page.content as animal>
