@@ -1,7 +1,7 @@
 <#import "parts/pageTemplate.ftl" as pt>
 
 <@pt.page>
-  <h2>Add animal</h2>
+  <h2>Add animal for ${user.firstName} ${user.surname} ${user.lastName}</h2>
   <form method="post">
       <#if animalError?? && animalError?has_content><div style="color:red">${animalError}</div></#if>
     <input type="hidden" name="id"
@@ -18,7 +18,7 @@
     <input type="date" name="birth"
            class="form-control ${(birthError??)?string('is-invalid', '')}"
            value="<#if animal?? && animal.birth??>${animal.birth}</#if>">
-    <input type="text" name="animalOwner"
+    <input type="hidden" name="animalOwner"
            class="form-control ${(animalOwnerError??)?string('is-invalid', '')}"
            value="<#if user??>${user.id}</#if>" />
     <button type="submit" style="color: black"><#if animal??>Edit<#else>Add</#if></button>
