@@ -63,31 +63,36 @@ public class AnimalController {
     Model model,
     @PathVariable User animalOwner
   ) {
+    model.addAttribute("animals", animalService.findAllAnimalsByOwner(animalOwner));
     model.addAttribute("user", animalOwner);
     return "addanimal";
   }
 
 //  @PreAuthorize("hasAuthority('ADMIN')")
-  @PostMapping
+  @PostMapping("/addanimal/{id}")
   public String addAnimal(
-      @PageableDefault(sort = {"name", "species", "sex"}, direction = Sort.Direction.ASC) Pageable pageable,
+//      @PageableDefault(sort = {"name", "species", "sex"}, direction = Sort.Direction.ASC) Pageable pageable,
       @Valid Animal animal,
+      @PathVariable("id") User animalOwner,
       BindingResult bindingResult,
       Model model
   ) {
     if (bindingResult.hasErrors()) {
       Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
       model.mergeAttributes(errorsMap);
+      model.addAttribute("user", animalOwner);
       model.addAttribute("animal", animal);
-//      model.addAttribute("animals", animalService.findAllAnimal());
-      Page<Animal> page = animalService.findAllAnimals(pageable);
-      model.addAttribute("page", page);
-      model.addAttribute("url", "/animals");
+      model.addAttribute("animals", animalService.findAllAnimalsByOwner(animalOwner));
 
-      return "animals";
+//      model.addAttribute("animals", animalService.findAllAnimal());
+//      Page<Animal> page = animalService.findAllAnimals(pageable);
+//      model.addAttribute("page", page);
+//      model.addAttribute("url", "/animals");
+
+      return "addanimal";
     } else {
       animalService.addAnimal(animal);
-      return "redirect:/animals";
+      return "redirect:/animals/addanimal/{id}";
     }
   }
 }

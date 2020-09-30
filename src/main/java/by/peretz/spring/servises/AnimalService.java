@@ -1,6 +1,7 @@
 package by.peretz.spring.servises;
 
 import by.peretz.spring.domain.Animal;
+import by.peretz.spring.domain.User;
 import by.peretz.spring.repository.AnimalRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -57,6 +58,10 @@ public class AnimalService {
     } else {
       return animalRepo.findByNameStartingWithIgnoreCaseAndSpeciesStartsWithIgnoreCase(nameFilter, speciesFilter, pageable);
     }
+  }
+
+  public List<Animal> findAllAnimalsByOwner(User user) {
+    return animalRepo.findByAnimalOwner(user);
   }
 
 }
