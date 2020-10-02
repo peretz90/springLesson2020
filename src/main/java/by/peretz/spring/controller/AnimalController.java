@@ -72,8 +72,8 @@ public class AnimalController {
   @PostMapping("/addanimal/{id}")
   public String addAnimal(
 //      @PageableDefault(sort = {"name", "species", "sex"}, direction = Sort.Direction.ASC) Pageable pageable,
-      @Valid Animal animal,
       @PathVariable("id") User animalOwner,
+      @Valid Animal animal,
       BindingResult bindingResult,
       Model model
   ) {
